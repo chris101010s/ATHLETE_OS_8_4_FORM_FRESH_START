@@ -49,3 +49,6 @@ Siehe `BUILD_WINDOWS_TO_IPHONE.md`. In das bisherige GitHub-Repo kopieren, ggf. 
 - https://www.npmjs.com/package/@react-navigation/bottom-tabs (7.21.0)
 - https://developer.apple.com/documentation/cryptokit/aes/gcm (authentifizierte AES-GCM-Primitive)
 - https://docs.github.com/en/actions/reference/runners/github-hosted-runners (Runner-Labels)
+
+## CI-Hotfix
+GitHub Actions Initial commit #1: laut übermitteltem Log alle Tests erfolgreich, Typecheck TS2345 in App.tsx: Linking.getInitialURL kann undefined liefern. Callback akzeptiert jetzt string | null | undefined. Alle 17 lokalen Testsuiten erneut bestanden; isolierter strikter Typecheck mit der gemeldeten Promise-Signatur bestanden. Vollständiger Expo-Typecheck und Xcode-Build noch nicht erneut in CI ausgeführt. Keine Änderungen an Version, Bundle-ID oder Datenspeicher.
