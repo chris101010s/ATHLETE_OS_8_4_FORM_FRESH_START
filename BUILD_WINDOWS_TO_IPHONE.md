@@ -1,0 +1,11 @@
+# FORM 8.4 — Windows → GitHub → iPhone
+
+1. Optional alte Daten als JSON sichern. 8.4 startet ohne automatische Übernahme; bestehende alte Daten werden nicht automatisch gelöscht.
+2. ZIP entpacken, Inhalt (inkl. `.github`, `.gitignore`, `modules`) in den Hauptordner deines bestehenden GitHub-Repository kopieren. Den alten Ordner `modules/athlete-ocr` löschen, sofern noch vorhanden. `modules/form-health` behalten; enthält jetzt auch Backup-Kryptografie.
+3. Alte `package-lock.json` aktualisieren (`npm install --package-lock-only` mit Internet) und committen. Falls nicht möglich, veraltetes Lockfile löschen: CI benutzt `npm install` statt `npm ci`. Keine privaten Backups, Fotos oder Datenbankdateien committen.
+4. In GitHub Desktop Änderungen prüfen, Commit `FORM 8.4 Fresh Start`, Push. In GitHub Actions den neuen Run **FORM 8.4 – iOS IPA (unsigned)** öffnen. Wenn die native Tab-Bar später einen Geräte-/Layoutfehler zeigt, manuell Workflow dispatch mit `custom_tabs=true` starten. Das ist ein UI-Fallback, kein Fix für fehlende npm-Abhängigkeiten.
+5. Pipeline prüft Abhängigkeiten, Expo-Konfiguration, Katalog/Bilder/Fonts, Tests/Typecheck, Apple-Kryptografie, Prebuild, Pods, Xcode und IPA. Bei Fehlern `ATHLETE_OS_Xcode_Fehlerlog` bzw. ersten roten Schritt ansehen. Bei Grün `ATHLETE_OS_unsigned_IPA-<run>` downloaden, entpacken; SHA-256 und Asset-Zahlen stehen in `release-manifest.json`. GitHub-Tarif/Runner-Minuten prüfen.
+6. IPA mit Sideloadly und eigener Apple-ID signieren, installieren. Erststart: freiwillige Angaben, neue Datenbank. Teste Plan, Satz, Tab-Wechsel, App-Neustart, Backup, Timer. Falls du deine alten Daten doch willst, importiere bewusst ein Backup. Keine Deinstallation nötig, solange die Signierung eine Überinstallation erlaubt.
+7. Bei kostenloser Apple-Signierung muss die App üblicherweise vor Ablauf des Profils erneuert werden. Gleiche Apple-ID/Bundle-ID und Sideloadly-Update verwenden. Vor einer Deinstallation 8.4-Backup exportieren; Deinstallation kann sämtliche lokalen Daten löschen.
+
+Optionaler HealthKit-/Widgets-Build wie in 8.3 (macOS/Xcode, geeignete Apple-Entitlements): `FORM_HEALTHKIT=1 FORM_WIDGETS=1 npx expo prebuild -p ios --clean`; Standard-Sideloadly-Build ohne diese Entitlements. Keine dieser nativen Varianten wurde hier gebaut.
